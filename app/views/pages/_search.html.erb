@@ -1,6 +1,6 @@
 <section aria-label="descripton search">
-  <%= form_with class: "usa-search usa-search--big" do |form| %>
-    <%= form.text_field :description, class: "usa-input", type: "search", name: "search" %>
+  <%= form_with scope: :search, class: "usa-search usa-search--big" do |form| %>
+    <%= form.text_field :description, class: "usa-input" %>
     <%= form.submit "Search", class: "usa-button" %>
   <% end %>
-</section> 
+</section>
