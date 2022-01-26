@@ -1,14 +1,19 @@
-<table class="usa-table">
-  <thead>
-    <tr>
-      <th scope="col" role="columnheader">Resource Name</th>
-      <th scope="col" role="columnheader"> Description </th>
-      <th scope="col" role="columnheader"> Type of Resource </th>
-      <th scope="col" role="columnheader"> Owner(s) </th>
-      <th scope="col" role="columnheader"> Status </th>
-    </tr>
-  </thead>
-  <tbody>
-    <%= render partial: "result", collection: @results %>
-  </tbody>
-</table>
+<div>
+  <table class="usa-table site-table-responsive site-table-simple">
+    <caption>
+      Airtable search results with the above parameters
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col" role="columnheader"> Resource name </th>
+        <th scope="col" role="columnheader"> Description </th>
+        <th scope="col" role="columnheader"> Type of resource </th>
+        <th scope="col" role="columnheader"> Owner(s) </th>
+        <th scope="col" role="columnheader"> Ready to use? </th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "result", collection: @results %>
+    </tbody>
+  </table>
+</div>

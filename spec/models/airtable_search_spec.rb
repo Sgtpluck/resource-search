@@ -2,13 +2,13 @@ require "rails_helper"
 
 RSpec.describe AirtableSearch, type: :model do
   describe "#initialize" do
-    let(:query) { double("description")}
+    let(:query) { double("description") }
     before { allow(Query::Description).to receive(:new) { query } }
 
     describe "no arguments" do
       it "description key is added to terms" do
-        search = AirtableSearch.new(nil)
-        expect(search.terms).to eq [query]
+        search = AirtableSearch.new({})
+        expect(search.terms).to eq []
       end
     end
 
@@ -26,10 +26,10 @@ RSpec.describe AirtableSearch, type: :model do
 
     describe "with no terms" do
       it "calls ProjectResources" do
-        a_search = AirtableSearch.new(nil)
-        a_search.find_resources
+        expect(ProjectResource).to receive(:search)
 
-        expect(ProjectResource).not_to receive(:search)
+        a_search = AirtableSearch.new({})
+        a_search.find_resources
       end
     end
 

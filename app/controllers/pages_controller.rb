@@ -1,5 +1,14 @@
 class PagesController < ApplicationController
   def home
-    @results = AirtableSearch.new(params[:search]).find_resources
+    @search = search_params
+    @results = AirtableSearch.new(search_params).find_resources
+  end
+
+  private
+
+  def search_params
+    return {} unless params[:search]
+
+    params.require(:search).permit!
   end
 end

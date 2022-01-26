@@ -5,25 +5,51 @@
     <div class="grid-row flex-align-center">
       <div class="grid-col-fill">
         <%= form.label  "description", "Description field", class: "padding-right-2" %>
-        <%= form.text_field :description, class: "usa-input" %>
+        <%= form.text_field :description, value: @search[:description], class: "usa-input" %>
       </div>
 
       <div class="grid-col-auto">
         <fieldset class="usa-fieldset">
-          <legend class="usa-legend usa-legend">Resource Reusability </legend>
-          <%= form.radio_button :reuse, "recommended", class: "usa-radio__input" %>
-          <%= form.label :reuse, "Recommended", :value => "recommended", class: "usa-radio__label"  %>
+          <legend class="usa-legend">Resource Reusability</legend>
+          <%= form.radio_button :reuse,
+            "recommended",
+            checked: @search[:reuse] == "recommended",
+            class: "usa-radio__input"
+          %>
+          <%= form.label :reuse, "Recommended", value: "recommended", class: "usa-radio__label"  %>
           
-          <%= form.radio_button :reuse, "recommended_or_suggested", class: "usa-radio__input" %>
-          <%= form.label :reuse, "Recommended or suggested", :value => "recommended_or_suggested", class: "usa-radio__label"  %>
+          <%= form.radio_button :reuse,
+            "recommended_or_suggested",
+            checked: @search[:reuse] == "recommended_or_suggested",
+            class: "usa-radio__input"
+          %>
+          <%= form.label :reuse, "Recommended or suggested", value: "recommended_or_suggested", class: "usa-radio__label"  %>
           
-          <%= form.radio_button :reuse, "all", class: "usa-radio__input" %>
-          <%= form.label :reuse, "All resources", :value => "all", class: "usa-radio__label" %>
+          <%= form.radio_button :reuse,
+            "all",
+            checked: @search[:reuse] == "all",
+            class: "usa-radio__input"
+          %>
+          <%= form.label :reuse, "All resources", value: "all", class: "usa-radio__label" %>
         </fieldset>
       </div>
     </div>
 
-    
+    <div class="grid-row flex-align-center margin-1">
+        <%= field_set_tag "Resource Type", class: "usa-fieldset grid-row", name: :type do%>
+          <% resource_types.each do |type| %>
+            <%= fields_for "search[type]" do |type_form| %>
+              <div class="usa-checkbox padding-05">
+                <%= type_form.check_box type,
+                 value: type,
+                 class: "usa-checkbox__input",
+                 checked: @search.dig(:type, type) == "1" %>
+                <%= type_form.label type, type, class: "usa-checkbox__label"  %>
+             </div>
+            <% end %>
+          <% end %>
+        <% end %>
+    </div>
 
     <%= form.submit "Search", class: "usa-button" %>
   <% end %>

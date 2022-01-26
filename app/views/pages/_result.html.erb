@@ -1,7 +1,9 @@
-<tr>
-  <td><%= result.fields["Resource Name"] %></td>
+<tr class="flex-row">
+  <td><%= link_to result.fields["Resource Name"], result.fields["Link"]["url"] %></td>
   <td><%= result.fields["Description"] %></td>
-  <td><%= result.fields["Type of Resource"]&.join(", ") %></td>
-  <td><%= result.fields["Owner"] %></td>
-  <td><%= result.fields["Reusable?"] %></td>
+  <td> 
+    <%= result.fields["Type of Resource"]&.join(", ") %>
+  </td>
+  <td class="maxw-7"><%= result.fields["Owner"] %></td>
+  <td><%= formatted_use[result.fields["Reusable?"]] %></td>
 </tr>
