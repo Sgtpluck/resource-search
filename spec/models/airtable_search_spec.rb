@@ -1,24 +1,20 @@
 require "rails_helper"
 
-RSpec.describe "AirtableSearch", type: :model do
+RSpec.describe AirtableSearch, type: :model do
   describe "#initialize" do
-    describe "no arguments" do
-      it "search_terms is an empty array" do
-        search = AirtableSearch.new
-        expect(search.terms).to eq []
-      end
+    let(:query) { double("description")}
+    before { allow(Query::Description).to receive(:new) { query } }
 
-      it "search_terms is an empty array" do
+    describe "no arguments" do
+      it "description key is added to terms" do
         search = AirtableSearch.new(nil)
-        expect(search.terms).to eq []
+        expect(search.terms).to eq [query]
       end
     end
 
     describe "with params" do
       it "creates a list of search terms" do
-        query = double("description")
-        allow(Query::Description).to receive(:new) { query }
-        search = AirtableSearch.new({ "description" => "value" })
+        search = AirtableSearch.new({"description" => "value"})
 
         expect(search.terms).to eq [query]
       end
@@ -26,14 +22,11 @@ RSpec.describe "AirtableSearch", type: :model do
   end
 
   describe "#find_resources" do
-    describe "with no terms" do
-      it "returns an empty array" do
-        search = AirtableSearch.new
-        expect(search.find_resources).to eq []
-      end
+    before { allow(ProjectResource).to receive(:search) }
 
-      it "does not call ProjectResources" do
-        a_search = AirtableSearch.new
+    describe "with no terms" do
+      it "calls ProjectResources" do
+        a_search = AirtableSearch.new(nil)
         a_search.find_resources
 
         expect(ProjectResource).not_to receive(:search)
@@ -42,7 +35,6 @@ RSpec.describe "AirtableSearch", type: :model do
 
     describe "with search terms" do
       let(:string) { "query string" }
-      before { allow(ProjectResource).to receive(:search) }
 
       it "calls ProjectResouce.search" do
         query = double("description")

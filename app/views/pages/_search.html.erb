@@ -1,6 +1,30 @@
 <section aria-label="descripton search">
-  <%= form_with scope: :search, class: "usa-search usa-search--big" do |form| %>
-    <%= form.text_field :description, class: "usa-input" %>
+  <h2>Find resources that suit your current project or need</h2>
+
+  <%= form_with scope: :search, class: "usa-search usa-search--big grid-container" do |form| %>
+    <div class="grid-row flex-align-center">
+      <div class="grid-col-fill">
+        <%= form.label  "description", "Description field", class: "padding-right-2" %>
+        <%= form.text_field :description, class: "usa-input" %>
+      </div>
+
+      <div class="grid-col-auto">
+        <fieldset class="usa-fieldset">
+          <legend class="usa-legend usa-legend">Resource Reusability </legend>
+          <%= form.radio_button :reuse, "recommended", class: "usa-radio__input" %>
+          <%= form.label :reuse, "Recommended", :value => "recommended", class: "usa-radio__label"  %>
+          
+          <%= form.radio_button :reuse, "recommended_or_suggested", class: "usa-radio__input" %>
+          <%= form.label :reuse, "Recommended or suggested", :value => "recommended_or_suggested", class: "usa-radio__label"  %>
+          
+          <%= form.radio_button :reuse, "all", class: "usa-radio__input" %>
+          <%= form.label :reuse, "All resources", :value => "all", class: "usa-radio__label" %>
+        </fieldset>
+      </div>
+    </div>
+
+    
+
     <%= form.submit "Search", class: "usa-button" %>
   <% end %>
 </section>
