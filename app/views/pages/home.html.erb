@@ -1,4 +1,10 @@
 <h1>Project Resources</h1>
 <%= render partial: "search" %>
 
-<%= render partial: "result_table" %> 
+<% if @results.empty? %>
+  <div>
+    <h2>No results fit that search.</h2>
+  </div>
+<% else %>
+  <%= render partial: "result_table" %> 
+<% end %>
