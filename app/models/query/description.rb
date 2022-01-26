@@ -3,6 +3,8 @@ class Query::Description
 
   def initialize(value)
     @value = value
+
+    QueryTerm.create(field: "Description", value: value)
   end
 
   def query_string

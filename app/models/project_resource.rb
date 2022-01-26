@@ -5,6 +5,10 @@ class ProjectResource < Airrecord::Table
   self.table_name = "Project Resources Library"
 
   def self.search(query)
-    all(filter: "AND(#{query.join(",")})")
+    begin
+      all(filter: "AND(#{query.join(",")})")
+    rescue StandardError
+      []
+    end
   end
 end
