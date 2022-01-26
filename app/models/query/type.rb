@@ -3,6 +3,8 @@ class Query::Type
 
   def initialize(values)
     @values = values.to_hash.filter_map { |k, v| k if v == "1" }
+
+    @values.each { |value| QueryTerm.create(field: "Type", value: value) }
   end
 
   def query_string

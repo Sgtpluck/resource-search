@@ -12,11 +12,18 @@ RSpec.describe Query::Type, type: :model do
     }.merge(merge_terms)
   end
 
+  before { allow(QueryTerm).to receive(:create) }
   let(:query) { Query::Type.new(search_term) }
 
   describe "#initalize" do
     it "crates the value array" do
       expect(query.values).to eq ["Training"]
+    end
+
+    it "creates a new QueryTerm object" do
+      expect(QueryTerm).to receive(:create)
+
+      query.values
     end
   end
 

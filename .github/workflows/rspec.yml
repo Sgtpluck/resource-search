@@ -26,6 +26,13 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup-project
 
+      - name: "Precompile assets"
+        shell: bash
+        env:
+          RAILS_ENV: ${{ inputs.rails_env }}
+          SECRET_KEY_BASE: not-actually-secret
+        run: bundle exec rake assets:precompile
+
       - name: Run rspec
         env:
           DATABASE_URL: ${{ steps.setup.outputs.database_url }}
