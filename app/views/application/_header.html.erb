@@ -1,0 +1,23 @@
+<header class="usa-header usa-header--basic">
+  <div class="grid-container">
+    <div class="grid-row">
+      <div class="usa-logo grid-col-6" id="basic-logo">
+        <%= link_to "Project Resources", root_path, class: "usa-logo__text font-heading-xl" %>
+      </div>
+      <div class="grid-row grid-col-6 grid-gap flex-align-center flex-justify-end">
+        <% if user_signed_in? %>
+          <div class="grid-col-auto">
+            <%= current_user %>
+          </div>
+          <div class="grid-col-auto">
+            <%= button_to "Log out", logout_path, class: "usa-button usa-button--accent-warm", method: :delete %>
+          </div>
+        <% else %>
+          <div class="grid-col-auto">
+            <%= link_to "Log in", uaa_login_url, class: "usa-button usa-button--accent-warm" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</header>

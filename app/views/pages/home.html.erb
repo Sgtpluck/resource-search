@@ -1,10 +1,15 @@
-<h1>Project Resources</h1>
-<%= render partial: "search" %>
+<div>
+  <% if user_signed_in? %>
+    <%= render partial: "search" %>
 
-<% if @results.empty? %>
-  <div>
-    <h2>No results fit that search.</h2>
-  </div>
-<% else %>
-  <%= render partial: "result_table" %> 
-<% end %>
+    <% if @results.empty? %>
+      <div>
+        <h2>No results fit that search.</h2>
+      </div>
+    <% else %>
+      <%= render partial: "result_table" %> 
+    <% end %>
+  <% else %>
+    <h2>Please log in to search library.</h2>
+  <% end %>
+</div>

@@ -8,6 +8,10 @@ on:
       - 'README.md'
   pull_request:
     branches: [ main ]
+  workflow_call:
+    secrets:
+      RAILS_MASTER_KEY:
+        required: true
   schedule:
     # cron format: 'minute hour dayofmonth month dayofweek'
     # this will run at noon UTC every day (7am EST / 8am EDT)
@@ -29,7 +33,7 @@ jobs:
         env:
           POSTGRES_DB: project_resource_search_test
           POSTGRES_USER: cidbuser
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: postgres          
 
     steps:
       - uses: actions/checkout@v2
@@ -40,6 +44,7 @@ jobs:
       - uses: ./.github/actions/run-server
         with:
           database_url: ${{ steps.setup.outputs.database_url }}
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
       - name: Run OWASP Full Scan
         uses: zaproxy/action-full-scan@v0.3.0
