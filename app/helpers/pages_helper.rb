@@ -20,10 +20,29 @@ module PagesHelper
   end
 
   def uaa_login_url
-    url = ENV["UAA_LOGIN"]
-    url += "?client_id=" + client_id
-    url += "&response_type=code&redirect_uri=" + ENV["REDIRECT_URI"]
-    url + "&state=" + state
+    uri.to_s
+  end
+
+  def uri
+    is_development? ? URI::HTTP.build(uri_params) : URI::HTTPS.build(uri_params)
+  end
+
+  def uri_params
+    {
+      host: ENV["UAA_HOST"],
+      path: ENV["UAA_PATH"],
+      port: ENV["UAA_PORT"],
+      query: query
+    }
+  end
+
+  def query
+    URI.encode_www_form({
+      client_id: client_id,
+      response_type: "code",
+      redirect_uri: ENV["REDIRECT_URI"],
+      state: state
+    })
   end
 
   def client_id

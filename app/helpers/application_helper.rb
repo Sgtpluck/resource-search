@@ -1,14 +1,18 @@
 module ApplicationHelper
   def current_user
-    session[:email] = "ci@example.com" if Rails.configuration.x.bypass_auth == true
+    session[:email] = "ci@example.com" if bypass_auth?
     @current_user ||= session[:email]
   end
-
+ 
   def user_signed_in?
     !!current_user
   end
 
-  def ci?
+  def bypass_auth?
     Rails.configuration.x.bypass_auth == true
+  end
+
+  def is_development?
+    Rails.env.development?
   end
 end
