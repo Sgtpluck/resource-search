@@ -23,6 +23,8 @@ RSpec.describe Session, type: :model do
 
     let(:jwt_keys) { {keys: [jwt_keys_hash]} }
     let(:jwt_decoded) { [{"email" => "test@example.com"}] }
+    let(:jwt_params) { {algorithm: "RS256", jwks: jwt_keys} }
+
 
     before do
       expect(Net::HTTP).to receive(:post_form).with(URI(token_uri), request_params).and_return(response)
@@ -33,7 +35,7 @@ RSpec.describe Session, type: :model do
       allow(ENV).to receive(:[]).with("REDIRECT_URI").and_return(redirect_uri)
       allow(response).to receive(:body).and_return(response_body)
 
-      expect(JWT).to receive(:decode).with("1234", "abcde", true, jwt_keys_hash).and_return jwt_decoded
+      expect(JWT).to receive(:decode).with("1234", nil, true, jwt_params).and_return jwt_decoded
     end
 
     it "returns an email" do

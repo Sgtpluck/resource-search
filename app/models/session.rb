@@ -14,7 +14,7 @@ class Session
       if Rails.env.development?
         JWT.decode response_body[:access_token], nil, false
       else
-        JWT.decode response_body[:access_token], jwt_keys[:value], true, jwt_keys
+        JWT.decode response_body[:access_token], nil, true, jwks: jwt_keys, algorithm: "RS256"
       end
   end
 
@@ -22,7 +22,7 @@ class Session
     @jwt_keys ||= JSON.parse(
       Net::HTTP.get(URI("https://uaa.fr.cloud.gov/token_keys")),
       symbolize_names: true
-    )[:keys][0]
+    )
   end
 
   def uri

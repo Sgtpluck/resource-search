@@ -7,4 +7,8 @@ module ApplicationHelper
   def user_signed_in?
     !!current_user
   end
+
+  def ci?
+    Rails.configuration.x.bypass_auth == true
+  end
 end
