@@ -23,6 +23,8 @@ module PagesHelper
     uri.to_s
   end
 
+  private
+
   def uri
     is_development? ? URI::HTTP.build(uri_params) : URI::HTTPS.build(uri_params)
   end
@@ -51,5 +53,9 @@ module PagesHelper
 
   def state
     SecureRandom.hex
+  end
+
+  def is_development?
+    Rails.env.development?
   end
 end

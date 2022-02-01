@@ -11,8 +11,4 @@ module ApplicationHelper
   def bypass_auth?
     Rails.configuration.x.bypass_auth == true
   end
-
-  def is_development?
-    Rails.env.development?
-  end
 end
