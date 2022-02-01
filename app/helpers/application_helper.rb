@@ -3,7 +3,7 @@ module ApplicationHelper
     session[:email] = "ci@example.com" if bypass_auth?
     @current_user ||= session[:email]
   end
- 
+
   def user_signed_in?
     !!current_user
   end
