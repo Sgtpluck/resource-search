@@ -4,6 +4,10 @@ class PagesController < ApplicationController
     @results = AirtableSearch.new(search_params).find_resources
   end
 
+  def redirect
+    redirect_to root_path
+  end
+
   private
 
   def search_params

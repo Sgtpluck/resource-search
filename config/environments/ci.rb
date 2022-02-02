@@ -7,4 +7,6 @@ Rails.application.configure do
   logger = ActiveSupport::Logger.new($stdout)
   logger.formatter = config.log_formatter
   config.logger = ActiveSupport::TaggedLogging.new(logger)
+
+  config.x.bypass_auth = true
 end

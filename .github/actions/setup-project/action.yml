@@ -11,6 +11,7 @@ inputs:
     default: postgres://cidbuser:postgres@localhost:5432/project_resource_search_test
 outputs:
   database_url:
+    description: database_url output
     value: ${{ inputs.database_url }}
 runs:
   using: composite
