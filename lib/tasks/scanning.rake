@@ -60,4 +60,4 @@ def all_issues_ignored?(issues)
   present_advisories_with_frequencies == ignored_advisories_with_frequencies
 end
 
-task default: ["standard", "brakeman", "bundler:audit", "yarn:audit"]
+task default: ["brakeman", "bundler:audit", "yarn:audit"]
