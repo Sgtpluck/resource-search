@@ -1,0 +1,16 @@
+<div>
+  <table class="usa-table site-table-responsive site-table-simple">
+    <caption>
+      Description searches by count
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col" role="columnheader" data-sortable> Count </th>
+        <th scope="col" role="columnheader"> Description </th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "description_data", collection: @query_data.description_data %>
+    </tbody>
+  </table>
+</div>
