@@ -15,6 +15,8 @@ class QueryData
     )
   end
 
+  private
+
   def process_count_data(data)
     data.map { |key, value| {value: key, count: value} }
   end
