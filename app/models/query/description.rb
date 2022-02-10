@@ -10,4 +10,8 @@ class Query::Description
   def query_string
     "SEARCH('#{value}', {Description})"
   end
+
+  def query_data
+    {description: value}
+  end
 end

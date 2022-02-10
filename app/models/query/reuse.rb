@@ -11,6 +11,10 @@ class Query::Reuse
     "OR(" + build_string + ")"
   end
 
+  def query_data
+    {reuse: value}
+  end
+
   private
 
   def build_string

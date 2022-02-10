@@ -17,4 +17,8 @@ class Query::Type
       .map { |value| "SEARCH('#{value}', {Type of Resource})" }
       .join(", ")
   end
+
+  def query_data
+    {kind: values}
+  end
 end
