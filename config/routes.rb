@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root "pages#home"
   post "/", to: "pages#home"
+  get "/analytics", to: "analytics#index"
 
   # session pages
   get "/auth", to: "sessions#create"

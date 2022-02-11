@@ -1,0 +1,16 @@
+<div>
+  <table class="usa-table site-table-responsive site-table-simple">
+    <caption>
+      Types of resources by count
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col" role="columnheader"> Count </th>
+        <th scope="col" role="columnheader"> Type </th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "type_data", collection: @query_data.type_data %>
+    </tbody>
+  </table>
+</div>

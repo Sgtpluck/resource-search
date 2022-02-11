@@ -1,0 +1,17 @@
+<div>
+  <table class="usa-table site-table-responsive site-table-simple">
+    <caption>
+      Latest searches
+    </caption>
+    <thead>
+      <tr>
+        <th scope="col" role="columnheader"> Description </th>
+        <th scope="col" role="columnheader"> Reusability </th>
+        <th scope="col" role="columnheader"> Type </th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: "latest_query", collection: @query_data.latest_queries %>
+    </tbody>
+  </table>
+</div>
