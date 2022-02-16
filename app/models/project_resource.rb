@@ -21,7 +21,7 @@ class ProjectResource < Airrecord::Table
   end
 
   def ready_for_use?
-    formatting[self["Reusable?"]]
+    formatting[self["Reusable?"]] || "Unknown"
   end
 
   def data_source
