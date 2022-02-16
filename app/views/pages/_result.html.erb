@@ -1,10 +1,11 @@
 <tr class="flex-row">
-  <td><%= link_to result.fields["Resource Name"], result.fields["Link"]["url"], target: "_blank" %></td>
-  <td><%= result.fields["Description"] %></td>
+  <td><%= result.data_source %></td>
+  <td><%= link_to result.name, result.url, target: "_blank" %></td>
+  <td><%= result.description %></td>
   <td> 
     <%= result.fields["Type of Resource"]&.join(", ") %>
   </td>
   <td><%= result.fields["File Type"] %></td>
-  <td><%= formatted_use[result.fields["Reusable?"]] %></td>
+  <td><%= result.ready_for_use? %></td>
   <td><%= result.fields["Approved to share?"] %>
 </tr>

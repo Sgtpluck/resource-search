@@ -11,4 +11,35 @@ class ProjectResource < Airrecord::Table
       []
     end
   end
+
+  def name
+    self["Resource Name"]
+  end
+
+  def url
+    self["Link"]["url"]
+  end
+
+  def ready_for_use?
+    formatting[self["Reusable?"]]
+  end
+
+  def data_source
+    "Project Resources"
+  end
+
+  def description
+    self["Description"] || name
+  end
+
+  private
+
+  def formatting
+    {
+      Recommended: "Yes",
+      Suggested: "Needs some work",
+      Discouraged: "Needs work",
+      Unreviewed: "Unknown"
+    }.with_indifferent_access
+  end
 end
