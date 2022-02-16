@@ -1,7 +1,7 @@
 <tr class="flex-row">
   <td><%= result.data_source %></td>
   <td><%= link_to result.name, result.url, target: "_blank" %></td>
-  <td><%= result.description %></td>
+  <td><%= format_description(result.description) %></td>
   <td> 
     <%= result.fields["Type of Resource"]&.join(", ") %>
   </td>
