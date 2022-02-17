@@ -1,6 +1,9 @@
 class AirtableSearch
   attr_reader :terms
-
+  BASES = [
+    ProjectResource,
+    PangolinResource
+  ]
   def initialize(params)
     @terms = []
 
@@ -12,7 +15,9 @@ class AirtableSearch
   end
 
   def find_resources
-    ProjectResource.search(terms.map(&:query_string).compact)
+    BASES.map do |base|
+      base.search(terms.map(&:query_string).compact)
+    end.flatten
   end
 
   private

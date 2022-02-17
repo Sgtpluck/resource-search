@@ -1,11 +1,18 @@
 module PagesHelper
-  def formatted_use
-    {
-      Recommended: "Yes",
-      Suggested: "Needs some work",
-      Discouraged: "Needs work",
-      Unreviewed: "Unknown"
-    }.with_indifferent_access
+  def format_description(desc)
+    # matching on the interior of markdown link notation
+    # [link](http://example.com)
+    # 1: "link", 2: "http://example.com"
+    link_data = desc.match(/\[(.+)\]\((.+)\)/)
+
+    if link_data
+      link = "<a href=\"#{link_data[2]}\" target=\"_blank\">#{link_data[1]}</a>"
+      # replacing the markdown link notation with html notation, so this
+      # is gsubbing with the [] and () included
+      desc = desc.gsub(/(\[.+\])(\(.+\))/, link)
+    end
+
+    simple_format(word_wrap(desc, line_width: 23)).html_safe
   end
 
   def resource_types
@@ -15,7 +22,8 @@ module PagesHelper
       "Training",
       "Guide",
       "Case Study",
-      "Report"
+      "Report",
+      "Research"
     ]
   end
 
