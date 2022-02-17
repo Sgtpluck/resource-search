@@ -1,5 +1,3 @@
-Airrecord.api_key = Rails.application.credentials.airtable_key
-
 class PangolinResource < Airrecord::Table
   self.base_key = Rails.application.credentials.pangolin_airtable_base_id
   self.table_name = "External Resources"
