@@ -1,5 +1,9 @@
 <div>
   <% if user_signed_in? %>
+    <div>
+      Please provide feedback about what data you'd like to see via 
+      <%= link_to "this Google Form", "https://docs.google.com/forms/d/e/1FAIpQLSdZOiAN8klOIzR0dbaQ1sc1qPEDB-5s3NaTPgV1g7Q1HLKLRw/viewform?usp=sf_link" %>
+    </div>
     <%= render partial: "search" %>
 
     <% if @results.empty? %>
