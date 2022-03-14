@@ -53,7 +53,8 @@ RSpec.describe FullSearch, type: :model do
 
         search = FullSearch.new("description" => "value")
 
-        expect(ProjectResource).to receive(:search)
+        expect(ProjectResource).to receive(:search).and_return []
+        expect(Guides).to receive(:search).and_return []
         search.find_resources
       end
     end

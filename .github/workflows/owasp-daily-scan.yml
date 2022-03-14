@@ -33,6 +33,7 @@ jobs:
       - uses: ./.github/actions/run-server
         with:
           database_url: ${{ steps.setup.outputs.database_url }}
+          rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
 
       - name: Run OWASP Full Scan
         uses: zaproxy/action-full-scan@v0.3.0
