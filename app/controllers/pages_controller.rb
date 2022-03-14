@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
   def home
     @search = search_params
-    @results = AirtableSearch.new(search_params).find_resources
+    @results = FullSearch.new(search_params).find_resources
   end
 
   def redirect

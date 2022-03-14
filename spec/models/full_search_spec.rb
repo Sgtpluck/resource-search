@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe AirtableSearch, type: :model do
+RSpec.describe FullSearch, type: :model do
   let(:query) { double("description") }
   describe "#initialize" do
     before { allow(Query::Description).to receive(:new) { query } }
@@ -8,24 +8,24 @@ RSpec.describe AirtableSearch, type: :model do
 
     describe "no arguments" do
       it "description key is added to terms" do
-        search = AirtableSearch.new({})
+        search = FullSearch.new({})
         expect(search.terms).to eq []
       end
 
       it "does not add a FullQuery" do
-        expect { AirtableSearch.new({}) }.not_to change {FullQuery.count}
+        expect { FullSearch.new({}) }.not_to change {FullQuery.count}
       end
     end
 
     describe "with params" do
       it "creates a list of search terms" do
-        search = AirtableSearch.new({"description" => "value"})
+        search = FullSearch.new({"description" => "value"})
 
         expect(search.terms).to eq [query]
       end
 
       it "adds a FullQuery" do
-        expect { AirtableSearch.new({"description" => "value"}) }.to change {FullQuery.count}
+        expect { FullSearch.new({"description" => "value"}) }.to change {FullQuery.count}
       end
     end
   end
@@ -38,7 +38,7 @@ RSpec.describe AirtableSearch, type: :model do
       it "calls ProjectResources" do
         expect(ProjectResource).to receive(:search)
 
-        a_search = AirtableSearch.new({})
+        a_search = FullSearch.new({})
         a_search.find_resources
       end
     end
@@ -51,9 +51,10 @@ RSpec.describe AirtableSearch, type: :model do
         allow(Query::Description).to receive(:new) { query }
         allow(query).to receive(:query_string) { string }
 
-        search = AirtableSearch.new("description" => "value")
+        search = FullSearch.new("description" => "value")
 
-        expect(ProjectResource).to receive(:search)
+        expect(ProjectResource).to receive(:search).and_return []
+        expect(Guides).to receive(:search).and_return []
         search.find_resources
       end
     end

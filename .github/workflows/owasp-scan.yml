@@ -26,6 +26,7 @@ jobs:
           POSTGRES_DB: project_resource_search_test
           POSTGRES_USER: cidbuser
           POSTGRES_PASSWORD: postgres
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
     steps:
       - uses: actions/checkout@v2
@@ -36,6 +37,7 @@ jobs:
       - uses: ./.github/actions/run-server
         with:
           database_url: ${{ steps.setup.outputs.database_url }}
+          rails_master_key: ${{ secrets.RAILS_MASTER_KEY }}
 
       - name: Run OWASP Baseline Scan
         uses: zaproxy/action-baseline@v0.6.1
