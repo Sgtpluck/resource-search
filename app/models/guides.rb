@@ -59,11 +59,16 @@ class Guide
   end
 
   def results
-    @results ||= JSON.parse(Net::HTTP.get(search_uri))["web"]["results"]
-      .map { |result| GuideResult.new(result, @affiliate) }
+    @results ||= search_results.map { |result| GuideResult.new(result, @affiliate) }
   end
 
   private
+
+  def search_results
+    return [] if Rails.env.test? || Rails.env.ci?
+
+    JSON.parse(Net::HTTP.get(search_uri))["web"]["results"] 
+  end
 
   def search_uri
     uri_params = {
