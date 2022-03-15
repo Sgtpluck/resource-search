@@ -1,12 +1,9 @@
 <section aria-label="descripton search">
-  <h2>Find resources that suit your current project or need</h2>
-
-  <%= form_with scope: :search, class: "usa-search usa-search--big grid-container" do |form| %>
-    <div class="grid-row flex-align-center">
-      <div class="grid-col-fill">
-        <%= form.label  "description", "Description field", class: "padding-right-2" %>
-        <%= form.text_field :description, value: @search[:description], class: "usa-input" %>
-      </div>
+  <%= form_with scope: :search, class: "usa-search", role: "search" do |form| %>
+    <div class="grid-row flex-no-wrap">
+      <%= form.label  "description", "Description field", class: "usa-sr-only" %>
+      <%= form.text_field :description, value: @search[:description], class: "usa-input usagov-search-autocomplete", type: "search" %>
+      <%= form.submit "Search", class: "usa-button" %>
     </div>
 
     <div class="grid-row flex-align-center margin-1">
@@ -25,6 +22,5 @@
         <% end %>
     </div>
 
-    <%= form.submit "Search", class: "usa-button" %>
   <% end %>
 </section>
