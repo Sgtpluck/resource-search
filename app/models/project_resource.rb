@@ -18,6 +18,18 @@ class ProjectResource < Airrecord::Table
     self["Link"]["url"]
   end
 
+  def resource_type
+    self["Type of Resource"]&.join(", ")
+  end
+
+  def file_type?
+    true
+  end
+
+  def file_type
+    self["File Type"]
+  end
+
   def ready_for_use?
     formatting[self["Reusable?"]] || "Unknown"
   end

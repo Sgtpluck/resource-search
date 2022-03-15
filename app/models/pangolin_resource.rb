@@ -19,6 +19,14 @@ class PangolinResource < Airrecord::Table
     self["Link"]
   end
 
+  def resource_type
+    self["Tags"]&.join(", ")
+  end
+
+  def file_type?
+    false
+  end
+
   def ready_for_use?
     "Yes"
   end

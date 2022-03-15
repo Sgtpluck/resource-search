@@ -105,4 +105,12 @@ class GuideResult
   def fields
     {}
   end
+
+  def resource_type
+    "Guide page"
+  end
+
+  def file_type?
+    false
+  end
 end

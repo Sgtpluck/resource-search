@@ -1,0 +1,11 @@
+<tr class="flex-row">
+  <td><%= result.data_source %></td>
+  <td><%= link_to result.name, sanitize(result.url), target: "_blank" %></td>
+  <td><%= format_description(result.description) %></td>
+  <td> 
+    <%= result.fields["Type of Resource"]&.join(", ") %>
+  </td>
+  <td><%= result.fields["File Type"] %></td>
+  <td><%= result.ready_for_use? %></td>
+  <td><%= result.fields["Approved to share?"] %>
+</tr>
