@@ -20,7 +20,7 @@ class PangolinResource < Airrecord::Table
   end
 
   def resource_type
-    self["Tags"]&.join(", ")
+    "Research"
   end
 
   def file_type?
@@ -37,5 +37,9 @@ class PangolinResource < Airrecord::Table
 
   def description
     self["Description"]
+  end
+
+  def tags
+    self["Tags"]
   end
 end

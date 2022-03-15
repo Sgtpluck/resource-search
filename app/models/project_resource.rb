@@ -30,6 +30,10 @@ class ProjectResource < Airrecord::Table
     self["File Type"]
   end
 
+  def tags
+    [self["Reusable?"]] + [self["Approved to share?"]] + (self["Discipline"] || [])
+  end
+
   def ready_for_use?
     formatting[self["Reusable?"]] || "Unknown"
   end

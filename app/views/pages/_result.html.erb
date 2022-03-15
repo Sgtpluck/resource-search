@@ -6,18 +6,31 @@
     </header>
     <div class="usa-card__body">
       <p> <%= result.description %> </p>
-      <div>
-        <%= image_tag "uswds/dist/img/usa-icons/folder_open.svg", "aria-hidden": true %>
+      <div class="grid-row justify-content">
+        <%= image_tag "uswds/dist/img/usa-icons/my_location.svg",
+          "aria-hidden": true,
+          class: "padding-right-1" %>
+        <%= result.data_source %>
+      </div>
+      <div class="grid-row justify-content">
+        <%= image_tag "uswds/dist/img/usa-icons/folder_open.svg",
+          "aria-hidden": true,
+          class: "padding-right-1" %>
         <%= result.resource_type %>
       </div>
       <% if result.file_type? %>
-        <div>
-          <%= image_tag "uswds/dist/img/usa-icons/file_present.svg", "aria-hidden": true %>
+        <div class="grid-row justify-content">
+          <%= image_tag "uswds/dist/img/usa-icons/file_present.svg",
+            "aria-hidden": true,
+            class: "padding-right-1" %>
           <%= result.file_type %>
         </div> 
       <% end %>
     </div>
     <div class="usa-card__footer">
+      <% result.tags.compact.each do |tag| %>
+        <span class="usa-tag"><%= tag %></span>
+      <% end %>
     </div>
   </div>
 </li>
