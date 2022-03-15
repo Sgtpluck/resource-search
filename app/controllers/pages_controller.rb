@@ -13,6 +13,6 @@ class PagesController < ApplicationController
   def search_params
     return {} unless params[:search]
 
-    params.require(:search).permit :description, :reuse, type: {}
+    params.require(:search).permit :description, type: {}
   end
 end
