@@ -27,10 +27,6 @@ class PangolinResource < Airrecord::Table
     false
   end
 
-  def ready_for_use?
-    "Yes"
-  end
-
   def data_source
     "Pangolin Resource"
   end

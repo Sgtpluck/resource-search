@@ -52,12 +52,30 @@ class Guides
     }
   ]
 
+  def initialize(description = nil)
+    @description = description
+  end
+
   def self.search(query_terms)
-    return [] if query_terms[:description].nil? || query_terms[:description] == ""
+    new(query_terms[:description]).search
+  end
+
+  def search
+    return [] if no_description? || test_or_ci?
 
     GUIDE_METADATA.map do |guide|
-      Guide.new(guide, query_terms[:description]).results
+      Guide.new(guide, @description).results
     end.flatten
+  end
+
+  private
+
+  def no_description?
+    @description.nil? || @description == ""
+  end
+
+  def test_or_ci?
+    Rails.env.test? || Rails.env.ci?
   end
 end
 
@@ -76,8 +94,6 @@ class Guide
   private
 
   def search_results
-    return [] if Rails.env.test? || Rails.env.ci?
-
     JSON.parse(Net::HTTP.get(search_uri))["web"]["results"]
   end
 
@@ -104,17 +120,9 @@ class GuideResult
   attr_reader :data_source, :name, :url, :description
   def initialize(result, data_source)
     @data_source = data_source
+    @description = result["snippet"]
     @name = result["title"]
     @url = result["url"]
-    @description = result["snippet"]
-  end
-
-  def ready_for_use?
-    "N/A"
-  end
-
-  def fields
-    {}
   end
 
   def resource_type

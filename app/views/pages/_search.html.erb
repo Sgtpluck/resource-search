@@ -8,6 +8,7 @@
 
     <div class="margin-top-2">
         <%= field_set_tag "Resource Type", class: "usa-fieldset text-bold", name: :type do%>
+          <%# TODO: pull "All" option out of the form and use JS to disable/check %>
           <% resource_types.each do |type| %>
             <%= fields_for "search[query][type]" do |type_form| %>
               <div class="usa-checkbox">
@@ -24,6 +25,7 @@
 
     <div class="margin-top-2">
         <%= field_set_tag "Source", class: "usa-fieldset text-bold", name: :type do%>
+          <%# TODO: pull "All" option out of the form and use JS to disable/check %>
           <% data_sources.each do |source| %>
             <%= fields_for "search[source]" do |source_form| %>
               <div class="usa-checkbox">

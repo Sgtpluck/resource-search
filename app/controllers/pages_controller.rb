@@ -1,6 +1,8 @@
 class PagesController < ApplicationController
   def home
     @search = formatted_search_params
+
+    # TODO: use formatted_search_params in FullSearch
     @results = FullSearch.new(search_params[:query], sources).find_resources
   end
 

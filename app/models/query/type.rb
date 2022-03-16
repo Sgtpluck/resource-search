@@ -8,7 +8,8 @@ class Query::Type
   end
 
   def query_string
-    return if values.empty?
+    # search all types if no types are selected or if "All" is selected
+    return if values.empty? || values.include?("All")
     "OR(" + build_string + ")"
   end
 

@@ -1,13 +1,14 @@
 <div>
   <% if user_signed_in? %>
-    <div>
-      Please provide feedback about what data you'd like to see via 
-      <%= link_to "this Google Form", "https://docs.google.com/forms/d/e/1FAIpQLSdZOiAN8klOIzR0dbaQ1sc1qPEDB-5s3NaTPgV1g7Q1HLKLRw/viewform?usp=sf_link" %>
-      <h2>Find resources that suit your current project or need</h2>
-    </div>
+    <h2>Find resources that suit your current project or need</h2>
+
     <div class="grid-row grid-gap">
       <div class="tablet:grid-col-4">
         <%= render partial: "search" %>
+        <div class="margin-top-2">
+          Please provide feedback about what data you'd like to see via 
+          <%= link_to "this Google Form", "https://docs.google.com/forms/d/e/1FAIpQLSdZOiAN8klOIzR0dbaQ1sc1qPEDB-5s3NaTPgV1g7Q1HLKLRw/viewform?usp=sf_link" %>
+        </div>
       </div>
       <div class="tablet:grid-col-8">
         <% if @results.empty? %>
@@ -19,9 +20,6 @@
         <% end %>
       </div>
     </div>
-    
-
-    
   <% else %>
     <h2>Please log in to search library.</h2>
   <% end %>
