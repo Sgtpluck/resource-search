@@ -1,13 +1,14 @@
 class FullSearch
-  attr_reader :terms
+  attr_reader :terms, :sources
   BASES = [
     ProjectResource,
     PangolinResource
   ]
-  def initialize(params)
+  def initialize(search_params = {}, sources = ["All"])
     @terms = []
+    @sources = sources
 
-    params.each do |field, query|
+    search_params.each do |field, query|
       @terms.push "Query::#{field.titleize}".constantize.new(query)
     end
 
@@ -22,11 +23,13 @@ class FullSearch
 
   def airtable_results
     BASES.map do |base|
+      next unless included_source?(base)
       base.search(terms.map(&:query_string).compact)
     end.flatten
   end
 
   def guide_results
+    return [] unless included_source?("Guides")
     Guides.search(guide_search_terms)
   end
 
@@ -36,5 +39,10 @@ class FullSearch
 
   def full_query
     terms.each_with_object({}) { |term, hash| hash.merge!(term.query_data) }
+  end
+
+  def included_source?(source)
+    return true if @sources.include?("All")
+    @sources.include?(source)
   end
 end

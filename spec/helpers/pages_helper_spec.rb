@@ -1,37 +1,6 @@
 require "rails_helper"
 
 RSpec.describe PagesHelper, type: :helper do
-  describe "#format_description" do
-    describe "with no links" do
-      describe "longer than a 23 character line width" do
-        it "returns the string formatted into html with a line break" do
-          desc = "This is a string that needs to be broken"
-          formatted = "<p>This is a string that\n<br />needs to be broken</p>"
-
-          expect(format_description(desc)).to eq formatted
-        end
-
-        describe "that has a markdown link" do
-          it "replaces the markdown link with an anchor tag" do 
-            desc = "This is a string with a [link](http:example.com) that needs to be broken"
-            formatted = "<p>This is a string with a\n<br /><a href=\"http:example.com\">link</a>\n<br />that needs to be broken</p>"
-
-            expect(format_description(desc)).to eq formatted
-          end
-        end
-
-        describe "that has markdown link characters" do
-          it "does not replace them with an anchor tag" do
-            desc = "A [string] that does have a link (http:example.com)"
-            formatted = "<p>A [string] that does\n<br />have a link\n<br />(http:example.com)</p>"
-
-            expect(format_description(desc)).to eq formatted
-          end
-        end
-      end
-    end
-  end
-
   describe "#resource_types" do
     it "returns an array" do
       expect(resource_types).to be_an Array

@@ -40,6 +40,6 @@ class PangolinResource < Airrecord::Table
   end
 
   def tags
-    self["Tags"]
+    self["Tags"] || []
   end
 end

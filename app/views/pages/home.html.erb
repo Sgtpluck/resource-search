@@ -5,14 +5,14 @@
       <%= link_to "this Google Form", "https://docs.google.com/forms/d/e/1FAIpQLSdZOiAN8klOIzR0dbaQ1sc1qPEDB-5s3NaTPgV1g7Q1HLKLRw/viewform?usp=sf_link" %>
       <h2>Find resources that suit your current project or need</h2>
     </div>
-    <div class="grid-row">
+    <div class="grid-row grid-gap">
       <div class="tablet:grid-col-4">
         <%= render partial: "search" %>
       </div>
       <div class="tablet:grid-col-8">
         <% if @results.empty? %>
         <div>
-          <h2>No results fit that search.</h2>
+          <h2>No results</h2>
         </div>
         <% else %>
           <%= render partial: "result_collection" %> 

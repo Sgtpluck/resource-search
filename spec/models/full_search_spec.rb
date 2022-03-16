@@ -7,13 +7,17 @@ RSpec.describe FullSearch, type: :model do
     before { allow(query).to receive(:query_data) { {description: "a description"} } }
 
     describe "no arguments" do
-      it "description key is added to terms" do
-        search = FullSearch.new({})
+      let(:search) { FullSearch.new }
+      it "terms is an empty array" do
         expect(search.terms).to eq []
       end
 
+      it "sources is a list with All in it" do
+        expect(search.sources).to eq ["All"]
+      end
+
       it "does not add a FullQuery" do
-        expect { FullSearch.new({}) }.not_to change {FullQuery.count}
+        expect { FullSearch.new }.not_to change {FullQuery.count}
       end
     end
 

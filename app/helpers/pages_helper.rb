@@ -1,6 +1,7 @@
 module PagesHelper
   def resource_types
     [
+      "All",
       "Template",
       "Example",
       "Training",
@@ -8,6 +9,15 @@ module PagesHelper
       "Case Study",
       "Report",
       "Research"
+    ]
+  end
+
+  def data_sources
+    [
+      "All",
+      "Project Resources",
+      "Pangolin Resources",
+      "Guides"
     ]
   end
 
