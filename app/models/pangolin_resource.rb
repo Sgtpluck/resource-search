@@ -19,8 +19,12 @@ class PangolinResource < Airrecord::Table
     self["Link"]
   end
 
-  def ready_for_use?
-    "Yes"
+  def resource_type
+    "Research"
+  end
+
+  def file_type?
+    false
   end
 
   def data_source
@@ -29,5 +33,9 @@ class PangolinResource < Airrecord::Table
 
   def description
     self["Description"]
+  end
+
+  def tags
+    self["Tags"] || []
   end
 end

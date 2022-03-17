@@ -1,6 +1,6 @@
 class QueryData
   def latest_queries
-    @latest_queries ||= FullQuery.last(10)
+    @latest_queries ||= FullQuery.last(10).reverse
   end
 
   def description_data

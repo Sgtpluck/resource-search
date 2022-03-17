@@ -2,9 +2,14 @@ require "rails_helper"
 
 RSpec.describe QueryData, type: :model do
   let(:query_data) { QueryData.new }
+  let(:full_query) { double FullQuery }
 
   describe "#latest_queries" do
-    before { allow(FullQuery).to receive(:last).and_return double FullQuery}
+    before do
+      allow(FullQuery).to receive(:last).and_return full_query
+      allow(full_query).to receive(:reverse).and_return [1,2,3,4]
+    end
+
 
     it "calls last on FullQuery once" do
       expect(FullQuery).to receive(:last).once

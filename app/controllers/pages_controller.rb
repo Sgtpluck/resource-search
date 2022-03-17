@@ -1,7 +1,9 @@
 class PagesController < ApplicationController
   def home
-    @search = search_params
-    @results = FullSearch.new(search_params).find_resources
+    @search = formatted_search_params
+
+    # TODO: use formatted_search_params in FullSearch
+    @results = FullSearch.new(search_params[:query], sources).find_resources
   end
 
   def redirect
@@ -10,9 +12,22 @@ class PagesController < ApplicationController
 
   private
 
-  def search_params
-    return {} unless params[:search]
+  def formatted_search_params
+    return {type: ["All"], source: ["All"]} if search_params[:query].empty?
+    {
+      type: search_params["query"]["type"]&.keep_if { |k, v| v == "1" }&.keys || ["All"],
+      source: sources,
+      description: search_params["query"]["description"]
+    }
+  end
 
-    params.require(:search).permit :description, :reuse, type: {}
+  def search_params
+    return {query: {}, source: {}} unless params[:search]
+
+    params.require(:search).permit(source: {}, query: [:description, type: {}])
+  end
+
+  def sources
+    search_params["source"]&.keep_if { |k, v| v == "1" }&.keys || ["All"]
   end
 end

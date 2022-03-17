@@ -18,8 +18,16 @@ class ProjectResource < Airrecord::Table
     self["Link"]["url"]
   end
 
-  def ready_for_use?
-    formatting[self["Reusable?"]] || "Unknown"
+  def resource_type
+    self["Type of Resource"]&.join(", ")
+  end
+
+  def file_type?
+    true
+  end
+
+  def file_type
+    self["File Type"]
   end
 
   def data_source
@@ -30,14 +38,7 @@ class ProjectResource < Airrecord::Table
     self["Description"] || name
   end
 
-  private
-
-  def formatting
-    {
-      Recommended: "Yes",
-      Suggested: "Needs some work",
-      Discouraged: "Needs work",
-      Unreviewed: "Unknown"
-    }.with_indifferent_access
+  def tags
+    ([self["Reusable?"]] + [self["Approved to share?"]] + (self["Discipline"] || [])).compact
   end
 end

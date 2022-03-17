@@ -1,49 +1,21 @@
 <section aria-label="descripton search">
-  <h2>Find resources that suit your current project or need</h2>
-
-  <%= form_with scope: :search, class: "usa-search usa-search--big grid-container" do |form| %>
-    <div class="grid-row flex-align-center">
-      <div class="grid-col-fill">
-        <%= form.label  "description", "Description field", class: "padding-right-2" %>
-        <%= form.text_field :description, value: @search[:description], class: "usa-input" %>
-      </div>
-
-      <div class="grid-col-auto">
-        <fieldset class="usa-fieldset">
-          <legend class="usa-legend">Resource Reusability</legend>
-          <%= form.radio_button :reuse,
-            "recommended",
-            checked: @search[:reuse] == "recommended",
-            class: "usa-radio__input"
-          %>
-          <%= form.label :reuse, "Recommended", value: "recommended", class: "usa-radio__label"  %>
-          
-          <%= form.radio_button :reuse,
-            "recommended_or_suggested",
-            checked: @search[:reuse] == "recommended_or_suggested",
-            class: "usa-radio__input"
-          %>
-          <%= form.label :reuse, "Recommended or suggested", value: "recommended_or_suggested", class: "usa-radio__label"  %>
-          
-          <%= form.radio_button :reuse,
-            "all",
-            checked: @search[:reuse] == "all",
-            class: "usa-radio__input"
-          %>
-          <%= form.label :reuse, "All resources", value: "all", class: "usa-radio__label" %>
-        </fieldset>
-      </div>
+  <%= form_with scope: :search, class: "usa-search", role: "search" do |form| %>
+    <div class="grid-row flex-no-wrap">
+      <%= form.label  "query[description]", "Description field", class: "usa-sr-only" %>
+      <%= form.text_field "query[description]", value: @search[:description], class: "usa-input usagov-search-autocomplete", type: "search" %>
+      <%= form.submit "Search", class: "usa-button" %>
     </div>
 
-    <div class="grid-row flex-align-center margin-1">
-        <%= field_set_tag "Resource Type", class: "usa-fieldset grid-row", name: :type do%>
+    <div class="margin-top-2">
+        <%= field_set_tag "Resource Type", class: "usa-fieldset text-bold", name: :type do%>
+          <%# TODO: pull "All" option out of the form and use JS to disable/check %>
           <% resource_types.each do |type| %>
-            <%= fields_for "search[type]" do |type_form| %>
-              <div class="usa-checkbox padding-05">
+            <%= fields_for "search[query][type]" do |type_form| %>
+              <div class="usa-checkbox">
                 <%= type_form.check_box type,
                  value: type,
                  class: "usa-checkbox__input",
-                 checked: @search.dig(:type, type) == "1" %>
+                 checked: @search.dig(:type)&.include?(type) %>
                 <%= type_form.label type, type, class: "usa-checkbox__label"  %>
              </div>
             <% end %>
@@ -51,6 +23,21 @@
         <% end %>
     </div>
 
-    <%= form.submit "Search", class: "usa-button" %>
+    <div class="margin-top-2">
+        <%= field_set_tag "Source", class: "usa-fieldset text-bold", name: :type do%>
+          <%# TODO: pull "All" option out of the form and use JS to disable/check %>
+          <% data_sources.each do |source| %>
+            <%= fields_for "search[source]" do |source_form| %>
+              <div class="usa-checkbox">
+                <%= source_form.check_box source,
+                 value: source.strip,
+                 class: "usa-checkbox__input",
+                 checked: @search.dig(:source)&.include?(source) %>
+                <%= source_form.label source, source, class: "usa-checkbox__label"  %>
+             </div>
+            <% end %>
+          <% end %>
+        <% end %>
+    </div>
   <% end %>
 </section>

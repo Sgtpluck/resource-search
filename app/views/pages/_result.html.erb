@@ -1,11 +1,36 @@
-<tr class="flex-row">
-  <td><%= result.data_source %></td>
-  <td><%= link_to result.name, sanitize(result.url), target: "_blank" %></td>
-  <td><%= format_description(result.description) %></td>
-  <td> 
-    <%= result.fields["Type of Resource"]&.join(", ") %>
-  </td>
-  <td><%= result.fields["File Type"] %></td>
-  <td><%= result.ready_for_use? %></td>
-  <td><%= result.fields["Approved to share?"] %>
-</tr>
+<li class="usa-card">
+  <div class="usa-card__container">
+    <header class="usa-card__header">
+      <h2 class="usa-card__heading">
+      <%= link_to result.name, sanitize(result.url), target: "_blank" %></h2>
+    </header>
+    <div class="usa-card__body">
+      <p> <%= result.description %> </p>
+      <div class="grid-row justify-content">
+        <%= image_tag "uswds/dist/img/usa-icons/my_location.svg",
+          "aria-hidden": true,
+          class: "padding-right-1" %>
+        <%= result.data_source %>
+      </div>
+      <div class="grid-row justify-content">
+        <%= image_tag "uswds/dist/img/usa-icons/folder_open.svg",
+          "aria-hidden": true,
+          class: "padding-right-1" %>
+        <%= result.resource_type %>
+      </div>
+      <% if result.file_type? %>
+        <div class="grid-row justify-content">
+          <%= image_tag "uswds/dist/img/usa-icons/file_present.svg",
+            "aria-hidden": true,
+            class: "padding-right-1" %>
+          <%= result.file_type %>
+        </div> 
+      <% end %>
+    </div>
+    <div class="usa-card__footer">
+      <% result.tags.compact.each do |tag| %>
+        <span class="usa-tag"><%= tag %></span>
+      <% end %>
+    </div>
+  </div>
+</li>
