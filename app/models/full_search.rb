@@ -4,15 +4,16 @@ class FullSearch
     ProjectResource,
     PangolinResource
   ]
-  def initialize(search_params = {}, sources = ["All"])
+  def initialize(sources, search_params = {})
     @terms = []
-    @sources = sources
+
+    @sources = sources.empty? ? ["All"] : sources
 
     search_params.each do |field, query|
       @terms.push "Query::#{field.titleize}".constantize.new(query)
     end
 
-    FullQuery.create(full_query) unless terms.empty?
+    FullQuery.create(full_query.merge(data_source: @sources)) unless @terms.empty?
   end
 
   def find_resources

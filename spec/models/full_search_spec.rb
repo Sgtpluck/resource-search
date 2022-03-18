@@ -6,8 +6,8 @@ RSpec.describe FullSearch, type: :model do
     before { allow(Query::Description).to receive(:new) { query } }
     before { allow(query).to receive(:query_data) { {description: "a description"} } }
 
-    describe "no arguments" do
-      let(:search) { FullSearch.new }
+    describe "with just a source" do
+      let(:search) { FullSearch.new(["All"]) }
       it "terms is an empty array" do
         expect(search.terms).to eq []
       end
@@ -17,19 +17,19 @@ RSpec.describe FullSearch, type: :model do
       end
 
       it "does not add a FullQuery" do
-        expect { FullSearch.new }.not_to change {FullQuery.count}
+        expect { FullSearch.new(["All"]) }.not_to change  { FullQuery.count }
       end
     end
 
     describe "with params" do
       it "creates a list of search terms" do
-        search = FullSearch.new({"description" => "value"})
+        search = FullSearch.new(["All"], {"description" => "value"})
 
         expect(search.terms).to eq [query]
       end
 
       it "adds a FullQuery" do
-        expect { FullSearch.new({"description" => "value"}) }.to change {FullQuery.count}
+        expect { FullSearch.new(["All"], {"description" => "value"}) }.to change { FullQuery.count }
       end
     end
   end
@@ -42,7 +42,7 @@ RSpec.describe FullSearch, type: :model do
       it "calls ProjectResources" do
         expect(ProjectResource).to receive(:search)
 
-        a_search = FullSearch.new({})
+        a_search = FullSearch.new(["All"], {})
         a_search.find_resources
       end
     end
@@ -55,7 +55,7 @@ RSpec.describe FullSearch, type: :model do
         allow(Query::Description).to receive(:new) { query }
         allow(query).to receive(:query_string) { string }
 
-        search = FullSearch.new("description" => "value")
+        search = FullSearch.new(["All"], "description" => "value")
 
         expect(ProjectResource).to receive(:search).and_return []
         expect(Guides).to receive(:search).and_return []
