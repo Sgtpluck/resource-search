@@ -23,8 +23,9 @@ class FullSearch
 
   def airtable_results
     BASES.map do |base|
-      return [] unless included_source?(base)
-      base.search(terms.map(&:query_string).compact)
+      included_source?(base.to_s) ?
+        base.search(terms.map(&:query_string).compact) :
+        []
     end.flatten
   end
 
@@ -41,8 +42,10 @@ class FullSearch
     terms.each_with_object({}) { |term, hash| hash.merge!(term.query_data) }
   end
 
-  def included_source?(source)
+  def included_source?(resource)
     return true if @sources.include?("All") || @sources.empty?
-    @sources.include?(source)
+    @sources
+      .map { |s| s.gsub(/\s+/, "") }
+      .include?(resource)
   end
 end
