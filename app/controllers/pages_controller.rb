@@ -3,7 +3,7 @@ class PagesController < ApplicationController
     @search = formatted_search_params
 
     # TODO: use formatted_search_params in FullSearch
-    @results = FullSearch.new(search_params[:query], sources).find_resources
+    @results = FullSearch.new(sources, search_params[:query]).find_resources
   end
 
   def redirect
