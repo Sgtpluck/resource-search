@@ -44,8 +44,6 @@ class FullSearch
 
   def included_source?(resource)
     return true if @sources.include?("All") || @sources.empty?
-    @sources
-      .map { |s| s.gsub(/\s+/, "") }
-      .include?(resource)
+    @sources.include?(resource)
   end
 end

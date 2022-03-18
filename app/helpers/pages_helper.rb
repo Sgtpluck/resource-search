@@ -15,8 +15,8 @@ module PagesHelper
   def data_sources
     [
       "All",
-      "Project Resource",
-      "Pangolin Resource",
+      "ProjectResource",
+      "PangolinResource",
       "Guides"
     ]
   end
