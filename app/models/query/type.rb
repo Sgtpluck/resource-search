@@ -9,7 +9,7 @@ class Query::Type
 
   def query_string
     # search all types if no types are selected or if "All" is selected
-    return if values.empty? || values.include?("All")
+    return if all?
     "OR(" + build_string + ")"
   end
 
@@ -20,6 +20,12 @@ class Query::Type
   end
 
   def query_data
-    {kind: values}
+    {kind: all? ? ["All"] : values}
+  end
+
+  private
+
+  def all?
+    values.empty? || values.include?("All")
   end
 end

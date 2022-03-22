@@ -1,5 +1,5 @@
 class FullQuery < ApplicationRecord
-  def create(description: "", kind: [])
-    FullQuery.create(description, kind)
+  def create(description: "", kind: [], data_source: [])
+    FullQuery.create(description, kind, data_source)
   end
 end
