@@ -8,6 +8,9 @@ inputs:
   database_url:
     description: DATABASE_URL to set
     required: true
+  rails_master_key:
+    description: RAILS_MASTER_KEY to decrypt credentials.yml.enc
+    required: true
 runs:
   using: "composite"
   steps:
