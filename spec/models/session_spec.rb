@@ -2,10 +2,10 @@ require "rails_helper"
 
 RSpec.describe Session, type: :model do
   describe "email" do
-    let(:token_uri) { "http://example.com" }
+    let(:token_uri) { "https://login.fr.cloud.gov/oauth/token" }
     let(:uaa_client_id) { "client_id" }
     let(:uaa_secret) { "secret" }
-    let(:redirect_uri) { "http://example.com/redirect" }
+    let(:redirect_uri) { "https://project_resource_search-stage.app.cloud.gov/auth" }
     let(:code) { "secret_code" }
     let(:request_params) do
       {
@@ -28,10 +28,8 @@ RSpec.describe Session, type: :model do
     before do
       expect(Net::HTTP).to receive(:post_form).with(URI(token_uri), request_params).and_return(response)
       expect(Net::HTTP).to receive(:get).and_return JSON.generate(jwt_keys)
-      allow(ENV).to receive(:[]).with("TOKEN_URI").and_return(token_uri)
       allow(ENV).to receive(:[]).with("UAA_CLIENT_ID").and_return(uaa_client_id)
       allow(ENV).to receive(:[]).with("UAA_SECRET").and_return(uaa_secret)
-      allow(ENV).to receive(:[]).with("REDIRECT_URI").and_return(redirect_uri)
       allow(response).to receive(:body).and_return(response_body)
 
       expect(JWT).to receive(:decode).with("1234", nil, true, jwt_params).and_return jwt_decoded

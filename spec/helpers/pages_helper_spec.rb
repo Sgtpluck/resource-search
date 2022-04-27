@@ -8,60 +8,9 @@ RSpec.describe PagesHelper, type: :helper do
   end
 
   describe "#uaa_login_url" do
-    let(:host) { "example.com" }
-    let(:path) { "/oauth" }
-    let(:redirect) { "http://example.com/redirect" }
-    before do
-      allow(ENV).to receive(:[]).with("UAA_HOST").and_return(host)
-      allow(ENV).to receive(:[]).with("UAA_PATH").and_return(path)
-      allow(ENV).to receive(:[]).with("UAA_PORT").and_return(nil)
-      allow(ENV).to receive(:[]).with("REDIRECT_URI").and_return(redirect)
-    end
-
-    describe "dev" do
-      let(:env) { double ActiveSupport::EnvironmentInquirer }
-      before do
-        allow(Rails).to receive(:env).and_return env
-        allow(env).to receive(:development?).and_return true
-        allow(ENV).to receive(:[]).with("UAA_CLIENT_ID").and_return "client_id"
-        allow(URI).to receive(:encode_www_form).and_return "querystring"
-      end
-
-      it "calls the HTTP builder" do
-        params = {
-          host: host,
-          path: path,
-          port: nil,
-          query: "querystring"
-        }
-        expect(URI::HTTP).to receive(:build).with params
-        uaa_login_url
-      end
-    end
-
-    describe "production" do
-      let(:application) { double ProjectResourceSearch::Application }
-      let(:credentials) { double ActiveSupport::EncryptedConfiguration }
-      before do
-        allow(ENV).to receive(:[]).with("UAA_CLIENT_ID").and_return nil
-        allow(URI).to receive(:encode_www_form).and_return "querystring"
-      end
-
-      it "calls into the credentials and the HTTPS builder" do
-        expect(Rails).to receive(:application).and_return application
-        expect(application).to receive(:credentials).and_return credentials
-        expect(credentials).to receive(:uaa_client_id).and_return "secret"
-
-        params = {
-          host: host,
-          path: path,
-          port: nil,
-          query: "querystring"
-        }
-
-        expect(URI::HTTPS).to receive(:build).with params
-        uaa_login_url
-      end
+    it "calls UaaUri builder" do
+      expect(UaaUri).to receive(:string)
+      uaa_login_url
     end
   end
 end
