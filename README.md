@@ -84,9 +84,49 @@ See [cloud.gov docs](https://cloud.gov/docs/services/relational-database/) for i
 
 #### Staging
 
-First time only: create DB service with `cf create-service aws-rds micro-psql project_resource_search-rds-stage`
+First time only: 
 
-`cf push --strategy rolling --vars-file config/deployment/stage.yml --var rails_master_key=$(cat config/master.key)`
+* Set security groups
+
+Make sure the application is open to public and trusted local network egress so it can connect to the DB and UAA server
+```
+cf bind-security-group public_networks_egress sandbox-gsa --space davida.marion
+cf bind-security-group trusted_local_networks_egress sandbox-gsa --space davida.marion
+```
+
+* create DB service: 
+
+```bash
+cf create-service aws-rds micro-psql project_resource_search-rds-stage
+```
+
+* Create/bind UAA service:
+
+```bash
+cf create-service cloud-gov-identity-provider oauth-client uaa-client
+cf create-service-key \
+    uaa-client \
+    uaa-service-key \
+    -c '{"redirect_uri": ["https://project_resource_search-stage.app.cloud.gov/auth", "https://project_resource_search-stage.app.cloud.gov/logout"]}'
+cf service-key uaa-client uaa-service-key
+```
+
+Take the output and open the Rails credentials:
+```bash
+EDITOR="vim" rails credentials:edit
+```
+
+Copy the client id and client secret into your credentials using the keys:
+```
+uaa_client_id: $CLIENT_ID_HERE
+uaa_client_secret: $CLIENT_SECRET_HERE
+```
+
+To deploy:
+
+```bash
+cf push --strategy rolling --vars-file config/deployment/stage.yml --var rails_master_key=$(cat config/master.key)
+```
 
 #### Production
 

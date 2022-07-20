@@ -25,16 +25,12 @@ class Session
     )
   end
 
-  def uri
-    @uri ||= URI(ENV["TOKEN_URI"])
-  end
-
   def response_body
     JSON.parse(response.body, symbolize_names: true)
   end
 
   def response
-    @response ||= Net::HTTP.post_form(uri, request_params)
+    @response ||= Net::HTTP.post_form(URI(token_uri), request_params)
   end
 
   def request_params
@@ -44,7 +40,19 @@ class Session
       response_type: "token",
       client_id: ENV["UAA_CLIENT_ID"] || Rails.application.credentials.uaa_client_id,
       client_secret: ENV["UAA_SECRET"] || Rails.application.credentials.uaa_client_secret,
-      redirect_uri: ENV["REDIRECT_URI"]
+      redirect_uri: redirect_uri
     }
+  end
+
+  def token_uri
+    Rails.env.development? ?
+      "http://localhost:8080/oauth/token" :
+      "https://uaa.fr.cloud.gov/oauth/token"
+  end
+
+  def redirect_uri
+    Rails.env.development? ?
+    "http://localhost:3000/auth" :
+    "https://project_resource_search-stage.app.cloud.gov/auth"
   end
 end
