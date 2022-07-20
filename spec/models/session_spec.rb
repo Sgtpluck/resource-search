@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Session, type: :model do
   describe "email" do
-    let(:token_uri) { "https://login.fr.cloud.gov/oauth/token" }
+    let(:token_uri) { "https://uaa.fr.cloud.gov/oauth/token" }
     let(:uaa_client_id) { "client_id" }
     let(:uaa_secret) { "secret" }
     let(:redirect_uri) { "https://project_resource_search-stage.app.cloud.gov/auth" }

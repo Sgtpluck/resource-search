@@ -86,6 +86,14 @@ See [cloud.gov docs](https://cloud.gov/docs/services/relational-database/) for i
 
 First time only: 
 
+* Set security groups
+
+Make sure the application is open to public and trusted local network egress so it can connect to the DB and UAA server
+```
+cf bind-security-group public_networks_egress sandbox-gsa --space davida.marion
+cf bind-security-group trusted_local_networks_egress sandbox-gsa --space davida.marion
+```
+
 * create DB service: 
 
 ```bash
