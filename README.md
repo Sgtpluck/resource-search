@@ -128,6 +128,20 @@ To deploy:
 cf push --strategy rolling --vars-file config/deployment/stage.yml --var rails_master_key=$(cat config/master.key)
 ```
 
+Once the deploy has finished, you have to run migrations.
+
+To do this, ssh into the instance of the resource search, 
+configure your session to match your application's environment
+and then run the migrations.
+
+```bash
+cf ssh project_resource_search-stage
+/tmp/lifecycle/shell
+rake db:migrate
+```
+
+TODO: make the deployment steps into a script
+
 #### Production
 
 First time only: create DB service with `cf create-service aws-rds <<SERVICE_PLAN_NAME>> project_resource_search-rds-prod`
