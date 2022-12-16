@@ -1,9 +1,13 @@
 class PagesController < ApplicationController
   def home
+    @search = {}
+  end
+  
+  def search
     @search = formatted_search_params
-
     # TODO: use formatted_search_params in FullSearch
     @results = FullSearch.new(sources, search_params[:query]).find_resources
+    render "home"
   end
 
   def redirect

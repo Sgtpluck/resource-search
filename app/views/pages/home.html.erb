@@ -18,7 +18,11 @@
         </div>
       </div>
       <div class="tablet:grid-col-8">
-        <% if @results.empty? %>
+        <% if @results.nil? %>
+          <div>
+            <h2>Please input some search parameters!</h2>
+          </div>
+        <% elsif @results.empty? %>
         <div>
           <h2>No results</h2>
         </div>
