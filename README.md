@@ -28,6 +28,22 @@ guide for an introduction to the framework.
 * Run the server: `bundle exec rails s`
 * Visit the site: http://localhost:3000
 
+#### Setting up a local UAA server
+
+You can set up a local UAA server. Instructions modified from [this cloud.gov repo](https://github.com/cloud-gov/cg-demos/blob/master/cg-identity/README.md#2-run-a-local-uaa-server-for-local-development)
+
+[Install docker](https://docs.docker.com/desktop/install/mac-install/) if you haven't already
+
+```bash
+mkdir /tmp/uaa
+cp local_uaa_server.yml /tmp/uaa/uaa.yml
+docker run -d --name uaa-uaa -p 8080:8080 -v /tmp/uaa:/uaa:rw hortonworks/cloudbreak-uaa:3.6.3
+```
+
+Username: user1
+Password: wombat
+
+
 #### Local Configuration
 
 Environment variables can be set in development using the [dotenv](https://github.com/bkeepers/dotenv) gem.
