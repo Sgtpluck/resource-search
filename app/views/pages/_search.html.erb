@@ -9,12 +9,18 @@
     <div class="margin-top-2">
         <%= field_set_tag "Resource Type", class: "usa-fieldset text-bold", name: :type do%>
           <%# TODO: pull "All" option out of the form and use JS to disable/check %>
-          <% resource_types.each do |type| %>
-            <%= fields_for "search[query][type]" do |type_form| %>
+          <%= fields_for "search[query][type]" do |type_form| %>
+            <div class="usa-checkbox">
+                <%= type_form.check_box "All",
+                 class: "usa-checkbox__input",
+                 checked: @search.dig(:type)&.include?("All") %>
+                <%= type_form.label "All", class: "usa-checkbox__label"  %>
+            </div> 
+            <% resource_types.each do |type| %>
               <div class="usa-checkbox">
                 <%= type_form.check_box type,
                  value: type,
-                 class: "usa-checkbox__input",
+                 class: "usa-checkbox__input type",
                  checked: @search.dig(:type)&.include?(type) %>
                 <%= type_form.label type, type, class: "usa-checkbox__label"  %>
              </div>

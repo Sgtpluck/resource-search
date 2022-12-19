@@ -1,7 +1,6 @@
 module PagesHelper
   def resource_types
     [
-      "All",
       "Template",
       "Example",
       "Training",
