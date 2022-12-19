@@ -26,14 +26,19 @@
     <div class="margin-top-2">
         <%= field_set_tag "Source", class: "usa-fieldset text-bold", name: :type do%>
           <%# TODO: pull "All" option out of the form and use JS to disable/check %>
-          <% data_sources.each do |source| %>
-            <%= fields_for "search[source]" do |source_form| %>
-              <div class="usa-checkbox">
-                <%= source_form.check_box source,
-                 value: source.strip,
+          <%= fields_for "search[source]" do |source_form| %>
+            <div class="usa-checkbox">
+                <%= source_form.check_box "All",
                  class: "usa-checkbox__input",
-                 checked: @search.dig(:source)&.include?(source) %>
-                <%= source_form.label source, source, class: "usa-checkbox__label"  %>
+                 checked: @search.dig(:source)&.include?("All") %>
+                <%= source_form.label "All", class: "usa-checkbox__label"  %>
+            </div> 
+            <% data_sources.each do |source| %>
+              <div class="usa-checkbox">
+                <%= source_form.check_box source[:value],
+                 class: "usa-checkbox__input source",
+                 checked: @search.dig(:source)&.include?(source[:value]) %>
+                <%= source_form.label source[:value], source[:name], class: "usa-checkbox__label"  %>
              </div>
             <% end %>
           <% end %>

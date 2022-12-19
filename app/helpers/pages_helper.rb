@@ -14,10 +14,9 @@ module PagesHelper
 
   def data_sources
     [
-      "All",
-      "ProjectResource",
-      "PangolinResource",
-      "Guides"
+      {name: "Project resource library", value: "ProjectResource"},
+      {name: "TTS Futures resource library", value: "PangolinResource"},
+      {name: "18F guides", value: "Guides"}
     ]
   end
 
